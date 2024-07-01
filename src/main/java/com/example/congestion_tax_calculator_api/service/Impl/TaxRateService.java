@@ -56,8 +56,8 @@ public class TaxRateService {
 
     @Async
     public CompletableFuture<TaxRate> getTaxRateByCityIdAndTimeAsync(int cityId, LocalTime time) {
-    return taxRateRepository.findFirstByCityIdAndStartTimeLessThanEqualAndEndTimeGreaterThanEqualOrStartTimeGreaterThanEqualAndEndTimeLessThanEqual(
-                    cityId, time, time, time, time)
+     return taxRateRepository.findTaxRate(
+                    cityId, time)
             .exceptionally(ex -> {
                 logger.error("Error retrieving Tax rate for city ID " + cityId, ex);
                 throw new RuntimeException(ex);
