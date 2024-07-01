@@ -1,4 +1,4 @@
-package com.example.congestion_tax_calculator_api.service;
+package com.example.congestion_tax_calculator_api.service.Impl;
 
 import java.time.Duration;
 import java.util.List;
@@ -23,17 +23,18 @@ public class CityService {
 
 @Autowired
 private CityRepository cityRepository;
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+@Autowired
+private RedisTemplate<String, String> redisTemplate;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+@Autowired
+private ObjectMapper objectMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(CityService.class);
+private static final Logger logger = LoggerFactory.getLogger(CityService.class);
 
-    private static final Duration CACHE_TIME = Duration.ofMinutes(5);
-@Async
-public CompletableFuture<List<City>> getAllCities() {
+private static final Duration CACHE_TIME = Duration.ofMinutes(5);
+    @Async
+    public CompletableFuture<List<City>> getAllCities() {
+    return CompletableFuture.supplyAsync(() -> {
         String cacheKey = "cities_all";
         List<City> cities;
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
@@ -55,35 +56,38 @@ public CompletableFuture<List<City>> getAllCities() {
             throw new RuntimeException(ex);
         }
 
-        return CompletableFuture.completedFuture(cities);
+        return cities;
+      });
     }
 
     public CompletableFuture<Optional<City>> getCityById(int cityId) {
-        String cacheKey = "city_" + cityId;
-        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        return CompletableFuture.supplyAsync(() -> {
+            String cacheKey = "city_" + cityId;
+            ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
 
-        try {
-            String cachedCity = valueOperations.get(cacheKey);
-            if (cachedCity != null) {
-               City city = objectMapper.readValue(cachedCity, City.class);
-                return CompletableFuture.completedFuture(Optional.of(city));
-            } else {
-                Optional<City> cityOptional = cityRepository.findById(cityId).get();
-                if (cityOptional.isPresent()) {
-                    City city = cityOptional.get();
-                    String serializedCity = objectMapper.writeValueAsString(city);
-                    valueOperations.set(cacheKey, serializedCity, CACHE_TIME);
-                    return CompletableFuture.completedFuture(cityOptional);
+            try {
+                String cachedCity = valueOperations.get(cacheKey);
+                if (cachedCity != null) {
+                    City city = objectMapper.readValue(cachedCity, City.class);
+                    return Optional.of(city);
                 }
+                return cityRepository.findById(cityId).get()
+                    .map(city -> {
+                        try {
+                            String serializedCity = objectMapper.writeValueAsString(city);
+                            valueOperations.set(cacheKey, serializedCity, CACHE_TIME);
+                        } catch (JsonProcessingException e) {
+                            logger.error("Error serializing city data", e);
+                        }
+                        return city;
+                    });
+            } catch (JsonProcessingException e) {
+                logger.error("Error processing JSON", e);
+                throw new RuntimeException("Error processing JSON", e);
+            } catch (Exception ex) {
+                logger.error("Error retrieving city with ID {}", cityId, ex);
+                throw new RuntimeException("Error retrieving city", ex);
             }
-        } catch (JsonProcessingException e) {
-            logger.error("Error processing JSON", e);
-            throw new RuntimeException(e);
-        } catch (Exception ex) {
-            logger.error("Error retrieving city with ID " + cityId, ex);
-            throw new RuntimeException(ex);
-        }
-
-        return CompletableFuture.completedFuture(Optional.empty());
+        });
     }
 }

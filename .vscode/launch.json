@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CongestionTaxCalculatorApplication<congestion-tax-calculator-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.congestion_tax_calculator_api.CongestionTaxCalculatorApplication",
+            "projectName": "congestion-tax-calculator-api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

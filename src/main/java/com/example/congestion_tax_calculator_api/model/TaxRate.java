@@ -22,10 +22,10 @@ public class TaxRate {
     @Column(name = "CityID", nullable = false)
     private int cityId; 
 
-    @Column(name = "StartTime", nullable = false)
-    private LocalTime starTime;
+    @Column(name = "start_time", nullable = false)
+    private LocalTime startTime;
 
-    @Column(name = "EndTime", nullable = false)
+    @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
     @Column(name = "Amount", nullable = false)
@@ -47,12 +47,12 @@ public class TaxRate {
         this.cityId = cityId;
     }
 
-    public LocalTime getStarTime() {
-        return starTime;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setStarTime(LocalTime starTime) {
-        this.starTime = starTime;
+    public void setStartTime(LocalTime starTime) {
+        this.startTime = starTime;
     }
 
     public LocalTime getEndTime() {

@@ -17,7 +17,7 @@ import com.example.congestion_tax_calculator_api.map.MappingProfile;
 import com.example.congestion_tax_calculator_api.model.TaxExemption;
 import com.example.congestion_tax_calculator_api.payload.request.TaxExemptionRequest;
 import com.example.congestion_tax_calculator_api.payload.response.GenericResponse;
-import com.example.congestion_tax_calculator_api.service.TaxExemptionService;
+import com.example.congestion_tax_calculator_api.service.Impl.TaxExemptionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,7 +36,7 @@ public class TaxExemptionController {
     public ResponseEntity<GenericResponse<TaxExemption>>addTaxExemption(@RequestBody TaxExemptionRequest request){
        try
        {
-        TaxExemption taxExemption = mapper.taxExemptionRequesTaxExemption(request);
+        TaxExemption taxExemption = mapper.taxExemptionRequestTaxExemption(request);
         TaxExemption addedTaxExemption = taxExemptionService.addTaxExemption(taxExemption);
         return ResponseEntity.ok(GenericResponse.success(addedTaxExemption));
         } catch (IllegalArgumentException ex) {

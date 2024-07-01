@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.congestion_tax_calculator_api.model.City;
 import com.example.congestion_tax_calculator_api.payload.response.GenericResponse;
-import com.example.congestion_tax_calculator_api.service.CityService;
+import com.example.congestion_tax_calculator_api.service.Impl.CityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

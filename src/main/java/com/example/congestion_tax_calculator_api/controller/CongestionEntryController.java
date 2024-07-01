@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.congestion_tax_calculator_api.map.MappingProfile;
 import com.example.congestion_tax_calculator_api.model.CongestionEntry;
 import com.example.congestion_tax_calculator_api.payload.request.CongestionEntryRequest;
-import com.example.congestion_tax_calculator_api.service.CongestionEntryService;
+import com.example.congestion_tax_calculator_api.service.Impl.CongestionEntryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

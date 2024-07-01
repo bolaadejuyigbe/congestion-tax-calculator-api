@@ -8,42 +8,42 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "VehicleTypes")
+@Table(name = "vehicletypes")
 public class VehicleType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="vehicle_type_id")
-    private int VehicleTypeID; 
+    private int vehicleTypeId; 
 
     @Column(name ="Description")
-    private String Description;
+    private String description;
 
-    @Column(name ="IsExempt")
-    private boolean IsExempt;
+    @Column(name ="is_exempt")
+    private boolean isExempt;
 
-    public int getVehicleTypeID() {
-        return VehicleTypeID;
+    public int getVehicleTypeId() {
+        return vehicleTypeId;
     }
 
-    public void setVehicleTypeID(int vehicleTypeID) {
-        VehicleTypeID = vehicleTypeID;
+    public void setVehicleTypeId(int vehicleTypeId) {
+        this.vehicleTypeId = vehicleTypeId;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
-    public boolean isIsExempt() {
-        return IsExempt;
+    public boolean isExempt() {
+        return isExempt;
     }
 
-    public void setIsExempt(boolean isExempt) {
-        IsExempt = isExempt;
+    public void setExempt(boolean isExempt) {
+        this.isExempt = isExempt;
     }
 
 }

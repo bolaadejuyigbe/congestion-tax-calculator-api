@@ -1,4 +1,4 @@
-package com.example.congestion_tax_calculator_api.service;
+package com.example.congestion_tax_calculator_api.service.Impl;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -80,7 +80,7 @@ public class TaxExemptionService {
         return taxExemptions;
     }
 
- public boolean isDateExempt(int cityId, LocalDate date) {
+   public boolean isDateExempt(int cityId, LocalDate date) {
     try {
         return taxExemptionRepository.existsByCityIdAndExemptionDate(cityId, date);
     } catch (Exception ex) {
