@@ -4,12 +4,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import com.example.congestion_tax_calculator_api.model.City;
 import com.example.congestion_tax_calculator_api.model.CongestionEntry;
 import com.example.congestion_tax_calculator_api.model.TaxExemption;
 import com.example.congestion_tax_calculator_api.model.TaxRate;
 import com.example.congestion_tax_calculator_api.payload.request.CongestionEntryRequest;
 import com.example.congestion_tax_calculator_api.payload.request.TaxExemptionRequest;
 import com.example.congestion_tax_calculator_api.payload.request.TaxRateRequest;
+import com.example.congestion_tax_calculator_api.payload.response.CityResponse;
 
 @Mapper
 public interface MappingProfile {
@@ -24,4 +26,6 @@ public interface MappingProfile {
 
     @Mapping(target = "taxRateId", ignore = true)
     TaxRate taxRateRequestTaxRate(TaxRateRequest request);
+    
+    CityResponse mapCitytoCityResponse(City city);
 }
